@@ -4,7 +4,7 @@ template select = {
     if (equal select "web") @{
         stdlib/system/write.py (concat name "/main.pvd")
         (concat "stdlib/net/http.py [" new-line tab "[" double-quote "index" double-quote " "
-        double-quote "Hello, world!" double-quote "]" new-line "]");
+        double-quote "<h1>Hello, world!</h1>" double-quote "]" new-line "]");
     } @{
         if (equal select "cli") @{
             stdlib/system/write.py (concat name "/main.pvd") cli
