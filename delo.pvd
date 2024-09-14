@@ -2,12 +2,12 @@ shell = load stdlib/system/shell.py;
 
 template select = {
     if (equal select "web") @{
-        stdlib/system/write.py (concat path "/main.pvd")
+        stdlib/system/write.py (concat name "/main.pvd")
         (concat "stdlib/net/http.py [" new-line tab "[" double-quote "index" double-quote " "
         double-quote "Hello, world!" double-quote "]" new-line "]");
     } @{
         if (equal select "cli") @{
-            stdlib/system/write.py (concat path "/main.pvd") cli
+            stdlib/system/write.py (concat name "/main.pvd") cli
             (concat "print " double-quote "Hello, world!" double-quote " new-line");
         } null;
     };
