@@ -1,16 +1,16 @@
 shell = load stdlib/system/shell.py;
 
 template select = {
-    web = concat "stdlib/net/http.py [" new-line tab "[" double-quote "index" double-quote " "  double-quote "Hello, world!" double-quote "]" new-line "]";
-    cli = concat "print " double-quote "Hello, world!" double-quote " new-line";
-
     if (equal select "web") @{
-        stdlib/system/write.py (concat name "/main.pvd") web
+        stdlib/system/write.py (concat path "/main.pvd")
+        (concat "stdlib/net/http.py [" new-line tab "[" double-quote "index" double-quote " "
+        double-quote "Hello, world!" double-quote "]" new-line "]");
     } @{
         if (equal select "cli") @{
-            stdlib/system/write.py (concat name "/main.pvd") cli
-        } null
-    }
+            stdlib/system/write.py (concat path "/main.pvd") cli
+            (concat "print " double-quote "Hello, world!" double-quote " new-line");
+        } null;
+    };
 };
 
 run _ = {
@@ -32,8 +32,8 @@ init name = {
     shell (list "touch" (concat name "/main.pvd"));
 };
 
-print "Delo: the project manager of Pravda." new-line;
-print "What name is project you want to start?" new-line;
+print "Delo: the project manager of Pravda." new-line "Version 0.3.8" new-line;
+print new-line "What name is project you want to start?" new-line;
 name = (input ">>> ");
 print "Okay! that's a good name." new-line;
 init name;
