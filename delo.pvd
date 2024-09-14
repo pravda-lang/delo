@@ -1,0 +1,34 @@
+shell = load stdlib/system/shell.py;
+
+run _ = {
+    prompt = (input ">>> ");
+    if (equal prompt "run") @{
+        shell (list "pravda" "--file" (concat name "/main.pvd"));
+        run null;
+    } @{
+        if (equal prompt "exit") @{
+            exit;
+        } @{
+            run null
+        };
+    }
+};
+
+init name = {
+    shell (list "mkdir" name);
+    shell (list "touch" (concat name "/main.pvd"));
+};
+
+print "Delo: the project manager of Pravda" new-line;
+print "What name is project you want to start?" new-line;
+name = (input ">>> ");
+print "Okay! that's a good name." new-line;
+init name;
+
+print "And, What editor do you use?" new-line;
+editor = (input ">>> ");
+input "Yeah! the setting up is finish. I'll open editor...";
+shell (list editor (concat name "/main.pvd"));
+
+print "Type `run` to run your project" new-line;
+run null;
