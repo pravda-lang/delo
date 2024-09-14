@@ -1,5 +1,18 @@
 shell = load stdlib/system/shell.py;
 
+template select = {
+    web = concat "stdlib/net/http.py [" new-line tab "[" double-quote "index" double-quote " "  double-quote "Hello, world!" double-quote "]" new-line "]";
+    cli = concat "print " double-quote "Hello, world!" double-quote " new-line";
+
+    if (equal select "web") @{
+        stdlib/system/write.py (concat name "/main.pvd") web
+    } @{
+        if (equal select "cli") @{
+            stdlib/system/write.py (concat name "/main.pvd") cli
+        } null
+    }
+};
+
 run _ = {
     prompt = (input ">>> ");
     if (equal prompt "run") @{
@@ -19,16 +32,22 @@ init name = {
     shell (list "touch" (concat name "/main.pvd"));
 };
 
-print "Delo: the project manager of Pravda" new-line;
+print "Delo: the project manager of Pravda." new-line;
 print "What name is project you want to start?" new-line;
 name = (input ">>> ");
 print "Okay! that's a good name." new-line;
 init name;
 
-print "And, What editor do you use?" new-line;
+print new-line "Do you want to use the useful official template?" new-line;
+print "Type `web` to template for web develop, `cli` to template for command-line apps, no input is select empty." new-line;
+select = (input ">>> ");
+template select;
+print "Okay! that makes it more easy." new-line;
+
+print new-line "And, What editor do you use?" new-line;
 editor = (input ">>> ");
-input "Yeah! the setting up is finish. I'll open editor...";
+input "Yeah! the setting up is finished. I'll open editor...";
 shell (list editor (concat name "/main.pvd"));
 
-print "Type `run` to run your project" new-line;
+print new-line "Type `run` to run this project." new-line;
 run null;
