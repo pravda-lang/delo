@@ -5,7 +5,7 @@ The project manager of Pravda
 
 It'll be more easy if you set alias at first.
 ```
-alias delo='pravda --file delo.pvd --args'
+alias delo='pravda delo.pvd'
 ```
 
 ### Create new project
