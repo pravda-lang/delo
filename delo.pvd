@@ -11,7 +11,7 @@ init name = {
     shell (list "touch" (concat name "/main.pvd"));
     shell (list "touch" (concat name "/README.md"));
 
-    write (concat name "/main.pvd") (concat "print " double-quote "Hello, world!" double-quote " new-line");
+    write (concat name "/main.pvd") (concat "print " double-quote "Hello, world!" double-quote " new-line" new-line);
     write (concat name "/README.md") (concat "# " name new-line);
 };
 
