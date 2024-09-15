@@ -21,6 +21,7 @@ run name = {
     path = (concat name "/build/" name ".pvd");
     line1 = concat "chmod +x " path;
     line2 = concat path "--args" ~(slice args (range 2 (len args)));
+    shell (concat line1 ";" line2);
 };
 
 init name = {
