@@ -3,7 +3,6 @@ write = load stdlib/system/write.py;
 read = load stdlib/system/read.py;
 index = load stdlib/list/index.pvd;
 slice = load stdlib/list/slice.pvd;
-replace = load stdlib/string/replace.py;
 
 create path = shell (list "touch" path);
 
