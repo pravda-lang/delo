@@ -2,8 +2,8 @@ shell = load stdlib/system/shell.py;
 write = load stdlib/system/write.py;
 index = load stdlib/list/index.pvd;
 
-run _ = {
-    shell (list "pravda" "--file" "./main.pvd");
+run path = {
+    shell (list "pravda" "--file" (concat path "/main.pvd"));
 };
 
 init name = {
@@ -19,5 +19,5 @@ if (equal "new" (index args 0)) @{
     init (index args 1);
 } null;
 if (equal "run" (index args 0)) @{
-    run null;
+    run (index args 1);
 } null;
