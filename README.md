@@ -1,2 +1,23 @@
 # Delo
-<img width="1095" alt="image" src="https://github.com/user-attachments/assets/4e28aa43-7f17-48cf-b510-b84cea0e4c98">
+The project manager of Pravda
+
+## Usage
+
+It'll be more easy if you set alias at first.
+```
+alias delo='pravda --file delo.pvd --args'
+```
+
+### Create new project
+Run below command to creare your new project.
+```
+delo new foo
+```
+the name `foo` is example. Decide your liked name.
+
+### Run your project
+this command means to run your project.
+
+```
+delo run foo
+```
