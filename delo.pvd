@@ -1,22 +1,17 @@
 shell = load stdlib/system/shell.py;
 write = load stdlib/system/write.py;
+read = load stdlib/system/read.py;
 index = load stdlib/list/index.pvd;
+slice = load stdlib/list/slice.pvd;
 replace = load stdlib/string/replace.py;
 
-read file = {
-    shell (list "cat" file)
-};
-
-create path = {
-    shell (list "touch" path)
-};
+create path = shell (list "touch" path);
 
 build name = {
+    code = read (concat name "/src/main.pvd");
+    output = concat "#!pravda" new-line ";" code;
+
     path = (concat name "/build/" name ".pvd");
-
-    code = (read (concat name "/src/main.pvd"));
-    output = concat "#!pravda" new-line ";" code
-
     shell (list "mkdir" (concat name "/build"));
     create path; write path output;
 };
@@ -24,8 +19,8 @@ build name = {
 run name = {
     build name;
     path = (concat name "/build/" name ".pvd");
-    shell (list "chmod" "+x" path)
-    shell path;
+    line1 = concat "chmod +x " path;
+    line2 = concat path "--args" ~(slice args (range 2 (len args)));
 };
 
 init name = {
@@ -45,6 +40,10 @@ if (equal "new" (index args 0)) @{
     if (equal "run" (index args 0)) @{
         run (index args 1);
     } @{
-        print "Delo: the project manager of Pravda" new-line;
+        if (equal "build" (index args 0)) @{
+            build (index args 1);
+        } @{
+            print "Delo: the project manager of Pravda" new-line;
+        };
     };
 };
