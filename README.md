@@ -15,9 +15,18 @@ delo new foo
 ```
 the name `foo` is example. Decide your liked name.
 
+### Build your project
+this command means to build your project.
+
+```
+delo build foo
+```
+Then, created `build` directory. there's executable file.
+
 ### Run your project
 this command means to run your project.
 
 ```
 delo run foo
 ```
+It needs built before.
