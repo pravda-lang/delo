@@ -1,6 +1,10 @@
 shell = load stdlib/system/shell.py;
-write = load stdlib/system/write.py;
 index = load stdlib/list/index.pvd;
+write = load stdlib/system/write.py
+
+create path = {
+    shell (list "touch" path)
+};
 
 run path = {
     shell (list "pravda" "--file" (concat path "/main.pvd"));
@@ -8,8 +12,8 @@ run path = {
 
 init name = {
     shell (list "mkdir" name);
-    shell (list "touch" (concat name "/main.pvd"));
-    shell (list "touch" (concat name "/README.md"));
+    create (concat name "/main.pvd");
+    create (concat name "/README.md");
 
     write (concat name "/main.pvd") (concat "print " double-quote "Hello, world!" double-quote " new-line" new-line);
     write (concat name "/README.md") (concat "# " name new-line);
