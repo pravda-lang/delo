@@ -7,6 +7,10 @@ replace = load stdlib/string/replace.py;
 
 create path = shell (list "touch" path);
 
+build null = {
+    print "Error! it needs project path" new-line;
+    exit
+};
 build name = {
     code = read (concat name "/src/main.pvd");
     output = concat "#!/usr/bin/env pravda" new-line ";" code;
@@ -16,6 +20,10 @@ build name = {
     create path; write path output;
 };
 
+run null = {
+    print "Error! it needs project path" new-line;
+    exit
+};
 run name = {
     path = (concat "./" name "/build/" name ".pvd");
     line1 = concat "chmod +x " path;
@@ -23,6 +31,10 @@ run name = {
     shell (concat line1 ";" line2);
 };
 
+init null = {
+    print "Error! it needs project name" new-line;
+    exit
+};
 init name = {
     shell (list "mkdir" name);
     shell (list "mkdir" (concat name "/src"));
