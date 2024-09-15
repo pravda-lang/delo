@@ -9,7 +9,7 @@ create path = shell (list "touch" path);
 
 build name = {
     code = read (concat name "/src/main.pvd");
-    output = concat "#!pravda" new-line ";" code;
+    output = concat "#!/usr/bin/env pravda" new-line ";" code;
 
     path = (concat name "/build/" name ".pvd");
     shell (list "mkdir" (concat name "/build"));
@@ -17,10 +17,9 @@ build name = {
 };
 
 run name = {
-    build name;
-    path = (concat name "/build/" name ".pvd");
+    path = (concat "./" name "/build/" name ".pvd");
     line1 = concat "chmod +x " path;
-    line2 = concat path "--args" ~(slice args (range 2 (len args)));
+    line2 = concat path " --args " ~(slice args (range 2 (len args)));
     shell (concat line1 ";" line2);
 };
 
