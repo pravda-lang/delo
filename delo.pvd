@@ -1,54 +1,23 @@
 shell = load stdlib/system/shell.py;
 write = load stdlib/system/write.py;
-
-template select = {
-    if (equal select "web") @{
-        write (concat name "/main.pvd")
-        (concat "stdlib/net/http.py [" new-line tab "[" double-quote "index" double-quote " "
-        double-quote "<h1>Hello, world!</h1>" double-quote "]" new-line "]");
-    } @{
-        if (equal select "cli") @{
-            write (concat name "/main.pvd")
-            (concat "print " double-quote "Hello, world!" double-quote " new-line");
-        } null;
-    };
-};
+index = load stdlib/list/index.pvd;
 
 run _ = {
-    prompt = (input ">>> ");
-    if (equal prompt "run") @{
-        shell (list "pravda" "--file" (concat name "/main.pvd"));
-        run null;
-    } @{
-        if (equal prompt "exit") @{
-            exit;
-        } @{
-            run null
-        };
-    }
+    shell (list "pravda" "--file" "./main.pvd");
 };
 
 init name = {
     shell (list "mkdir" name);
     shell (list "touch" (concat name "/main.pvd"));
+    shell (list "touch" (concat name "/README.md"));
+
+    write (concat name "/main.pvd") (concat "print " double-quote "Hello, world!" double-quote " new-line");
+    write (concat name "/README.md") (concat "# " name new-line);
 };
 
-print "Delo: the project manager of Pravda." new-line "Version 0.3.8" new-line;
-print new-line "What name is project you want to start?" new-line;
-name = (input ">>> ");
-print "Okay! that's a good name." new-line;
-init name;
-
-print new-line "Do you want to use the useful official template?" new-line;
-print "Type `web` to template for web develop, `cli` to template for command-line apps, no input is select empty." new-line;
-select = (input ">>> ");
-template select;
-print "Okay! that makes it more easy." new-line;
-
-print new-line "And, What editor do you use?" new-line;
-editor = (input ">>> ");
-input "Yeah! the setting up is finished. I'll open editor...";
-shell (list editor (concat name "/main.pvd"));
-
-print new-line "Type `run` to run this project." new-line;
-run null;
+if (equal "new" (index args 0)) @{
+    init (index args 1);
+} null;
+if (equal "run" (index args 0)) @{
+    run null;
+} null;
