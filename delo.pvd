@@ -24,8 +24,7 @@ build name = {
         }
     });
 
-    output = concat "#!/usr/bin/env pravda" new-line ";"
-    (if (equal include null) @{ code } @{ include });
+    output = concat "#!/usr/bin/env pravda" new-line ";" include;
 
     path = (concat name "/build/" name ".pvd");
     shell (list "mkdir" (concat name "/build"));
