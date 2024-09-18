@@ -3,7 +3,10 @@ write = load stdlib/system/write.py;
 read = load stdlib/system/read.py;
 index = load stdlib/list/index.pvd;
 slice = load stdlib/list/slice.pvd;
+regex = load stdlib/string/regex.py;
+replace = load stdlib/string/replace.py;
 
+homedir = stdlib/system/homedir.py;
 create path = shell (list "touch" path);
 
 build null = {
@@ -12,7 +15,16 @@ build null = {
 };
 build name = {
     code = read (concat name "/src/main.pvd");
-    output = concat "#!/usr/bin/env pravda" new-line ";" code;
+
+    include = reduce (regex "load .*pvd;" code) @code lambda(i -> {
+        replace code i {
+            i = replace i "load " "";
+            i = replace i ";" "";
+            concat "{" (read (concat homedir "/" i)) "};"
+        }
+    });
+
+    output = concat "#!/usr/bin/env pravda" new-line ";" include;
 
     path = (concat name "/build/" name ".pvd");
     shell (list "mkdir" (concat name "/build"));
