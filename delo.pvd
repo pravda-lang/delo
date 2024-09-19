@@ -8,6 +8,7 @@ replace = load stdlib/string/replace.py;
 
 homedir = stdlib/system/homedir.py;
 create path = shell (list "touch" path);
+mkdir name = shell (list "mkdir" name);
 
 build null = {
     print "Error! it needs project path" new-line;
@@ -15,7 +16,6 @@ build null = {
 };
 build name = {
     code = read (concat name "/src/main.pvd");
-
     include = reduce (regex "load .*pvd;" code) @code lambda(i -> {
         replace code i {
             i = replace i "load " "";
@@ -23,11 +23,10 @@ build name = {
             concat "{" (read (concat homedir "/" i)) "};"
         }
     });
-
     output = concat "#!/usr/bin/env pravda" new-line ";" include;
 
+    mkdir (concat name "/build");
     path = (concat name "/build/" name ".pvd");
-    shell (list "mkdir" (concat name "/build"));
     create path; write path output;
 };
 
@@ -47,8 +46,8 @@ init null = {
     exit
 };
 init name = {
-    shell (list "mkdir" name);
-    shell (list "mkdir" (concat name "/src"));
+    mkdir name;
+    mkdir (concat name "/src");
 
     create (concat name "/src/main.pvd");
     create (concat name "/README.md");
